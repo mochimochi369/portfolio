@@ -10,14 +10,14 @@
     <!-- FontAwesome (アイコン代替用) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- フォント設定 (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* ==================================== */
         /* 1. カスタムカラー変数 (穏やかなオレンジ/テラコッタ系) */
         /* ==================================== */
         :root {
-            --color-accent: #f97316;    /* オレンジ (アクセントカラー) */
+            --color-accent: #ea580c;     /* 濃いオレンジ/テラコッタ (アクセントカラー) */
             --color-light-accent: #ffedd5; /* 淡いオレンジ (背景・装飾用) */
             --color-border-accent: #fdba74; /* 中間オレンジ (枠線用) */
             --color-text-dark: #1f2937; /* 濃いグレー (主要テキスト) */
@@ -41,8 +41,9 @@
             position: relative;
             padding-bottom: 0.5rem;
             margin-bottom: 2rem;
-            font-weight: 700;
-            font-size: 1.5rem; /* text-xl */
+            font-weight: 800; /* Extra bold */
+            font-size: 1.875rem; /* text-3xl */
+            color: #111827; /* 濃い色 */
         }
         /* セクションタイトルの下線（アクセントカラー） */
         .section-title::after {
@@ -50,9 +51,9 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
-            height: 4px;
-            background-color: var(--color-accent); /* 穏やかなオレンジ */
+            width: 70px; /* 長く */
+            height: 5px; /* 太く */
+            background-color: var(--color-accent);
             border-radius: 9999px;
         }
 
@@ -60,41 +61,75 @@
         /* 4. カードとホバーエフェクト */
         /* ==================================== */
         .card {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 1rem; /* 角丸を強調 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s;
         }
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            transform: translateY(-8px); /* より大きく持ち上げる */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
         }
 
         /* ==================================== */
-        /* 5. プロフィール画像代替（アイコンボックス） */
+        /* 5. プロフィール画像コンテナ (画像表示エリア) */
         /* ==================================== */
-        .profile-icon-box {
-            width: 192px; 
-            height: 192px;
+        .profile-image-container {
+            /* モバイル向け */
+            width: 200px;
+            height: 200px;
+            border-radius: 9999px; /* 真円 */
+            overflow: hidden;
+            background-color: var(--color-light-accent);
+            border: 6px solid var(--color-border-accent); /* 枠線を太く */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--color-light-accent); /* 淡いオレンジ */
-            color: var(--color-accent); /* 濃いオレンジ */
-            border-radius: 9999px;
-            border: 4px solid var(--color-border-accent); /* 中間オレンジ */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
         }
-        .profile-icon-box i {
-            font-size: 6rem; /* アイコンサイズ */
+        .profile-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 画像がコンテナを埋めるように調整 */
+        }
+        .profile-image-container .placeholder-icon {
+            color: var(--color-accent);
+            font-size: 7rem;
         }
         /* レスポンシブ：デスクトップでの調整 */
         @media (min-width: 768px) {
-             .profile-icon-box {
-                width: 256px;
-                height: 256px;
+            .profile-image-container {
+                width: 280px; 
+                height: 280px;
             }
-            .profile-icon-box i {
-                font-size: 8rem;
+            .profile-image-container .placeholder-icon {
+                font-size: 9rem; 
             }
+        }
+
+        /* ==================================== */
+        /* 6. スキルカード内の画像コンテナ */
+        /* ==================================== */
+        .skill-image-wrapper {
+            width: 56px; /* w-14 */
+            height: 56px; /* h-14 */
+            border-radius: 0.75rem; /* rounded-xl */
+            background-color: var(--color-light-accent);
+            border: 2px solid var(--color-border-accent);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .skill-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .skill-image-wrapper .skill-fallback-icon {
+             font-size: 2rem; /* text-3xl相当 */
+             color: var(--color-accent);
         }
     </style>
 </head>
@@ -103,15 +138,16 @@
     <!-- ==================================== -->
     <!-- ヘッダーセクション -->
     <!-- ==================================== -->
-    <header class="bg-white sticky top-0 z-10 border-b border-gray-200">
+    <!-- ヘッダーの余白は現状維持 (px-4 py-4) -->
+    <header class="bg-white sticky top-0 z-10 border-b border-orange-100 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-gray-800">
-                <!-- タイトルのアクセントカラーをオレンジに変更 -->
-                <a href="#" class="hover:text-orange-600 transition duration-300">My <span class="text-orange-600">Portfolio</span></a>
+            <h1 class="text-2xl font-extrabold text-gray-800">
+                <!-- タイトルカラーをaccentに変更 -->
+                <a href="#" class="hover:text-orange-700 transition duration-300">My <span class="text-orange-600">Portfolio</span></a>
             </h1>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#about" class="text-gray-600 hover:text-orange-600 transition duration-300">自己紹介</a>
-                <a href="#skills" class="text-gray-600 hover:text-orange-600 transition duration-300">技術関心</a>
+            <nav class="hidden md:flex space-x-8 text-base font-medium">
+                <a href="#about" class="text-gray-700 hover:text-orange-600 transition duration-300">自己紹介</a>
+                <a href="#skills" class="text-gray-700 hover:text-orange-600 transition duration-300">技術関心</a>
             </nav>
         </div>
     </header>
@@ -124,41 +160,51 @@
         <!-- ==================================== -->
         <!-- 1. 自己紹介セクション (ID: about) -->
         <!-- ==================================== -->
-        <section id="about" class="py-16 md:py-24">
-            <div class="flex flex-col md:flex-row items-center gap-12">
+        <section id="about" class="py-12 md:py-16">
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
                 
-                <!-- プロフィール写真代替 -->
+                <!-- プロフィール写真コンテナ -->
                 <div class="w-full md:w-1/3 flex justify-center">
-                    <div class="profile-icon-box">
-                        <i class="fas fa-user-circle"></i>
+                    <div class="profile-image-container">
+                        <!--  -->
+                        <img 
+                            id="profile-picture" 
+                            src="https://placehold.co/280x280/ea580c/ffffff?text=YOUR+PHOTO" 
+                            alt="佐藤陽太のプロフィール写真" 
+                            onerror="this.style.display='none'; document.getElementById('placeholder-icon').style.display='block';">
+                        <!-- 画像が読み込めなかった場合の代替アイコン -->
+                        <i id="placeholder-icon" class="fas fa-user-circle placeholder-icon" style="display: none;"></i>
                     </div>
                 </div>
 
                 <!-- 基本情報とガクチカ -->
                 <div class="w-full md:w-2/3">
-                    <p class="text-sm font-semibold text-orange-600 mb-2">Hello, I'm</p>
-                    <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4">
+                    <p class="text-sm font-semibold text-orange-600 mb-2 tracking-widest uppercase">Hello, I'm</p>
+                    <h2 class="text-6xl md:text-7xl font-black text-gray-900 mb-4 leading-tight">
                         佐藤 陽太
                     </h2>
-                    <p class="text-2xl text-gray-600 mb-6">
-                        日本大学・理工学部
+                    <!-- 所属学科を「応用情報工学科」に修正 -->
+                    <p class="text-xl text-gray-600 mb-8 font-medium">
+                        日本大学・理工学部 応用情報工学科
                     </p>
 
                     <!-- ガクチカ：構造化して可読性を向上 -->
-                    <h3 class="section-title text-xl mt-8">学生時代に力を入れたこと（計画実行力）</h3>
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 card">
-                        <ul class="space-y-3">
+                    <!-- タイトルサイズをsection-titleに合わせる -->
+                    <h3 class="section-title text-2xl mt-8">学生時代に力を入れたこと（計画実行力）</h3>
+                    <!-- p-6からp-8に拡張、角丸を強調 -->
+                    <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200 card">
+                        <ul class="space-y-4">
                             <!-- 課題設定 -->
                             <li class="flex items-start">
-                                <i class="fas fa-bullseye text-orange-500 mt-1 mr-3"></i>
+                                <i class="fas fa-bullseye text-orange-500 mt-1 mr-3 flex-shrink-0 text-lg"></i>
                                 <div>
                                     <span class="font-bold text-gray-800">課題と目標:</span>
-                                    <span class="text-gray-700">情報学科に在籍する中、苦手だった物理系科目を、予習・復習を徹底することで克服し、基礎を固めることを目標としました。</span>
+                                    <span class="text-gray-700">応用情報工学科に在籍する中、苦手だった物理系科目を、予習・復習を徹底することで克服し、基礎を固めることを目標としました。</span>
                                 </div>
                             </li>
                             <!-- 具体的な行動 -->
                             <li class="flex items-start">
-                                <i class="fas fa-cogs text-orange-500 mt-1 mr-3"></i>
+                                <i class="fas fa-cogs text-orange-500 mt-1 mr-3 flex-shrink-0 text-lg"></i>
                                 <div>
                                     <span class="font-bold text-gray-800">計画的な行動:</span>
                                     <span class="text-gray-700">難解な箇所を予習で明確化し、授業後に演習で理解度を確認するサイクルを継続。地道な努力を計画的に実行しました。</span>
@@ -166,7 +212,7 @@
                             </li>
                             <!-- 成果と学び -->
                             <li class="flex items-start">
-                                <i class="fas fa-lightbulb text-orange-600 mt-1 mr-3"></i>
+                                <i class="fas fa-lightbulb text-orange-600 mt-1 mr-3 flex-shrink-0 text-lg"></i>
                                 <div>
                                     <span class="font-bold text-orange-700">成果と学び:</span>
                                     <span class="text-gray-700 font-semibold">物理系科目で優秀な成績を収め、学業全体の向上に繋がりました。困難な目標達成には、**地道な努力の継続と計画実行力**が不可欠であることを学びました。</span>
@@ -181,29 +227,50 @@
         <!-- ==================================== -->
         <!-- 2. 興味のある技術セクション (ID: skills) -->
         <!-- ==================================== -->
-        <section id="skills" class="py-16 md:py-24">
+        <section id="skills" class="py-12 md:py-16">
             <h3 class="section-title text-3xl">興味のある技術</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- gap-8をgap-10に拡張 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
 
-                <!-- 技術カード 1: 画像認識 -->
-                <div class="bg-white p-6 rounded-xl border border-gray-200 card">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-eye text-3xl text-orange-500 mr-4"></i>
-                        <h4 class="text-xl font-bold text-gray-800">画像認識 (Image Recognition)</h4>
+                <!-- 技術カード 1: 画像認識 (画像挿入済み) -->
+                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200 card">
+                    <div class="flex items-center mb-4">
+                        <!-- 画像コンテナ (w-14 h-14, mr-4) -->
+                        <div class="skill-image-wrapper mr-4">
+                            <!-- https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhzbRYLmbUY4N5zDeVOYP68i5q7-3eYUCn7lTy99lbJPNtq0ORlrBmT_klgkJwhfHpi2h9OKVv6Ewqy70nDzLv5G4bTP3PzMLuQNg2xMp8k-ks5iC-AYc2ApFgrVy2QUtjQh7QyH56fe4k/s800/ai_image_gazou_ninshiki.png -->
+                            <img 
+                                src="https://placehold.co/56x56/ea580c/ffffff?text=VISION" 
+                                alt="画像認識のコンセプト画像" 
+                                class="w-full h-full object-cover"
+                                onerror="this.style.display='none'; document.getElementById('icon-vision').style.display='block';">
+                            <!-- 画像が読み込めなかった場合の代替アイコン (ロボット) -->
+                            <i id="icon-vision" class="fas fa-robot skill-fallback-icon" style="display: none;"></i>
+                        </div>
+                        <h4 class="text-2xl font-extrabold text-gray-800">画像認識 (Image Recognition)</h4>
                     </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        深層学習（特にCNN）を用いた画像分類や物体検出技術に強い関心があります。AIが視覚情報を理解し、現実世界の問題解決に応用できる可能性に魅力を感じています。
+                    <p class="text-gray-700 leading-relaxed text-base">
+                        深層学習（特にCNN）を用いた画像分類や物体検出技術に強い関心があります。AIが視覚情報を理解し、現実世界の問題解決に応用できる可能性に魅力を感じています。特に、医療画像解析や自動運転への応用に関心があります。
                     </p>
                 </div>
 
-                <!-- 技術カード 2: 自然言語処理 -->
-                <div class="bg-white p-6 rounded-xl border border-gray-200 card">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-comment-dots text-3xl text-orange-500 mr-4"></i>
-                        <h4 class="text-xl font-bold text-gray-800">自然言語処理 (NLP)</h4>
+                <!-- 技術カード 2: 自然言語処理 (画像挿入済み) -->
+                <div class="bg-white p-6 md:p-8 rounded-xl border border-gray-200 card">
+                    <div class="flex items-center mb-4">
+                        <!-- 画像コンテナ (w-14 h-14, mr-4) -->
+                        <div class="skill-image-wrapper mr-4">
+                            <!-- https://1.bp.blogspot.com/-kwMHBpDRC98/WMfCOCDhmCI/AAAAAAABClk/0YhKPlx69H8akEluJniMmVV-RoJCRtPvACLcB/s800/onsei_ninshiki_smartphone.png -->
+                            <img 
+                                src="https://placehold.co/56x56/ea580c/ffffff?text=TEXT" 
+                                alt="自然言語処理のコンセプト画像" 
+                                class="w-full h-full object-cover"
+                                onerror="this.style.display='none'; document.getElementById('icon-nlp').style.display='block';">
+                            <!-- 画像が読み込めなかった場合の代替アイコン (言語) -->
+                            <i id="icon-nlp" class="fas fa-language skill-fallback-icon" style="display: none;"></i>
+                        </div>
+                        <h4 class="text-2xl font-extrabold text-gray-800">自然言語処理 (NLP)</h4>
                     </div>
-                    <p class="text-gray-700 leading-relaxed">
-                        TransformerモデルやLLM（大規模言語モデル）の仕組みに興味があり、機械翻訳や文章要約、感情分析などの分野で、人間とAIのコミュニケーションを円滑にする技術を深く学びたいと考えています。
+                    <p class="text-gray-700 leading-relaxed text-base">
+                        TransformerモデルやLLM（大規模言語モデル）の仕組みに興味があり、機械翻訳や文章要約、感情分析などの分野で、人間とAIのコミュニケーションを円滑にする技術を深く学びたいと考えています。日本語特有の表現解析に挑戦したいです。
                     </p>
                 </div>
             </div>
@@ -214,11 +281,12 @@
     <!-- ==================================== -->
     <!-- フッターセクション -->
     <!-- ==================================== -->
-    <footer class="bg-gray-700 text-white mt-16">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm">
-            &copy; 2025 佐藤 陽太. All Rights Reserved.
+    <!-- mt-16をmt-12に削減 -->
+    <footer class="bg-gray-800 text-white mt-12 shadow-inner">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm font-light">
+            &copy; 2025 佐藤 陽太. All Rights Reserved. - Modern Portfolio Design
         </div>
     </footer>
 
 </body>
-</html>
+</html>>
